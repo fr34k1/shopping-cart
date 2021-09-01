@@ -35,6 +35,20 @@ export default class Application{
     noFilterRender(){
         this.products.forEach(({id,title,price,description,image})=>{
             const p2 = new Product(id,price,title,description,image);
+            const listener = this.cart.add2cart
+            
+            p2.subscribeListeners(
+                "add2cartBtn",
+                "click",
+                [listener,{
+                    id:id,
+                    price:price,
+                    title:title,
+                    image:image
+                }],
+                this.cart,
+                 
+                )
             this.container.appendChild(p2.toHTMLObject());
         })
     }

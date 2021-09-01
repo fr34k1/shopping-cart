@@ -22,7 +22,6 @@ export default class Product extends HtmlObject{
             attributes:{
                 class:"card",
                 style:"width:18rem;",
-
             },
             content:{
                 html:`<img src="${this.image}" width="150" class="card-img-top" alt="...">`
@@ -37,8 +36,6 @@ export default class Product extends HtmlObject{
     }
 
     body(){
-        
-
         this.HTML2Object("product-body",{
             tag:"div",
             attributes:{
@@ -61,13 +58,10 @@ export default class Product extends HtmlObject{
     
 
     add2cartButton(){
-       
         this.HTML2Object("add2cartBtn",{
             tag:"a",
             attributes:{
-              
                 href:"#",
-
             },
             content:{
                 text:"add 2 cart"
@@ -75,17 +69,15 @@ export default class Product extends HtmlObject{
             children:[this.getHtmlObject("add2cartBtn"),this.getHtmlObject("detailsProduct")],
             events:{
                 click:(e)=>{
+                    
                     if(confirm("quieres agregar este producto al shopping cart?")){
                         const item=this.product2Object();
                         //console.log(x)
                     }
-                },
-                
+                },  
             },
             parentNode:"product-body"
-        })
-        
-        
+        })   
     }
 
     detailsButton(){
@@ -94,7 +86,6 @@ export default class Product extends HtmlObject{
             tag:"a",
             attributes:{
                 "data-toggle":"modal",
-                "data-target":"#exampleModal",
                 href:"#",
 
             },
@@ -104,12 +95,20 @@ export default class Product extends HtmlObject{
             children:[this.getHtmlObject("add2cartBtn"),this.getHtmlObject("detailsProduct")],
             events:{
                 click:(e)=>{
+                   
                     const t=document.querySelector(".product-title");
+                    
                     t.innerHTML=this.title;
+
                     const p=document.querySelector(".product-price");
                     p.innerHTML="$"+this.price;
+
+                    const i=document.querySelector(".product-image");
+                    i.setAttribute("src",this.image)
+
                     const d=document.querySelector(".product-description");
                     d.innerHTML=this.description;
+                    $("#details-modal").modal("show");
                 },
                 
             },
@@ -126,6 +125,10 @@ export default class Product extends HtmlObject{
             image:this.image
         }
     }
+
+
+
+   
 }
 
 

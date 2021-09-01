@@ -2,24 +2,20 @@
 
 export default class HtmlObject{
     constructor(){
-        //console.log("asdasdasd2323")
         this.objects={};
+        this.eventSubscribers={}
     }
 
     HTML2Object(key,{tag,attributes,content,events,parentNode},){
-
-        const ob = document.createElement(tag);
+        
+        const ob = document.createElement(tag); 
         
         if(attributes != undefined){
-            //.log("asdasdasd123123")
-           
-            
             for(let key in attributes){
                 ob.setAttribute(key,attributes[key]);
-                console.log(key)
+                //console.log(key)
             }
         }
-        
 
         if(content != undefined){
             if(content["html"]){
@@ -29,13 +25,20 @@ export default class HtmlObject{
             }
         }
 
-        if(events){
-            for (let key in events ){
-                ob.addEventListener(events[key].event,events[key].listenner);
+        if(events != undefined){
+            for (let ev in events ){
+                ob.addEventListener(ev,(e)=>{
+                    events[ev](e)
+
+                    if(this.eventSubscribers[key][ev]!=undefined){
+                        this.eventSubscribers[key][ev].forEach(([fn,args])=>{
+                            fn(args,e)
+                        })
+                    }
+                });
             };
         }
 
-       
         
         this.objects[key]=ob;
         
@@ -49,9 +52,25 @@ export default class HtmlObject{
     }
 
     addEvent2Object(key,{evnt,listener}){
-        this.objects[key].addEventListener(evnt,listener);
+        this.objects[key].addEventListener(evnt,(e)=>{
+            listener(e);
+            
+        });
     }
 
+ 
+
+    subscribeListeners(tag,evnt,[callback,args],ob,){
+        if(this.eventSubscribers[tag]== undefined){
+            
+            this.eventSubscribers[tag]={};
+            this.eventSubscribers[tag][evnt]=[]
+            this.eventSubscribers[tag][evnt].push([callback.bind(ob),args])
+            
+        }else{
+            this.eventSubscribers[tag][evnt].push([callback.bind(ob),args])
+        }
+    }
 
     getHtmlObject(key){
         return this.objects[key];    

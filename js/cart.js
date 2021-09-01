@@ -14,10 +14,13 @@ export default class Cart extends HtmlObject{
         })
     }
 
-    add2cart(product){
-
-        product.id=this.items.length
-        this.items.push(product);
+    add2cart(product,event){
+        
+       
+       product.id=this.items.length
+        
+       this.items.push(product);
+        
         const item = new CartItem(this.items.length,product.title,product.price,Date(),product.image);
 
         this.shop.appendChild(item.item2Html((e)=>{         
@@ -26,11 +29,13 @@ export default class Cart extends HtmlObject{
                 console.log(product.id)
                 return item.id != product.id;
             })
-            console.log(this.items)
+           
             this.calculateTotal();
         }))
-        console.log(this.items)
+       
         this.calculateTotal();
+
+        //console.log(this)
             
     }
 
