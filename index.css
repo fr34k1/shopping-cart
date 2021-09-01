@@ -1,0 +1,45 @@
+
+main{
+ 
+}
+
+.card{
+    margin:30px 30px
+}
+
+.sidebar{
+    
+    height:100vh;
+    width: 20%;
+    border-left: 1px solid lightgrey;
+    position:absolute;
+    right:0;    
+    z-index:1;
+
+}
+
+.cart-image{
+    width:50px;
+    height:55px;
+    right:30px;
+    bottom:0;
+    position:absolute;
+    border-left:3px solid black;
+    border-top:3px solid black;
+    border-bottom:3px solid black;
+    z-index:3;
+    cursor:pointer;
+}
+
+.shop-cart{
+    height:80vh;
+    max-height:80vh;
+    
+    overflow-y: scroll;
+   
+}
+
+
+.list-group-item {
+    font-size: 90%;
+}
