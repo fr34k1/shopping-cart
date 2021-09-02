@@ -2,21 +2,21 @@
 import products from './database.js';
 import Product from './product.js';
 import Cart from './cart.js';
-
+import Pagination from './pagination.js';
 
 
 export default class Application{
     
     constructor(){
-
         this.products=products;
         console.log(products)
         this.container =document.getElementById("product-view");
         this.cart = new Cart();
+        this.pagination=new Pagination(this.products.length,3);
     }
 
     
-    renderProducts(filter={}){
+    renderProducts(filter={search:{},pagination:{actual:1}}){
         if(!this.products.length){
             
         }else{
@@ -27,7 +27,6 @@ export default class Application{
                 console.log("asdasd")
             }
         }
-        
         
         
     }

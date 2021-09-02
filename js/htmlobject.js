@@ -1,14 +1,22 @@
 
-
+/*
+    Clase de la que heredan todos los componentes
+*/
 export default class HtmlObject{
     constructor(){
-        this.objects={};
-        this.eventSubscribers={}
+
+        this.objects={};  //este objeto guarda los componentes de objetos html
+        this.eventSubscribers={} //este objeto guarda las funciones de los objetos que se subcriben a los eventos
+
     }
 
+    /*Method 
+        este metodo parsea un objeto literal pasado como parametro a un objeto del DOM de javascript
+        y lo guarda en la propiedad objetos
+    */
     HTML2Object(key,{tag,attributes,content,events,parentNode},){
         
-        const ob = document.createElement(tag); 
+        const ob = document.createElement(tag);  
         
         if(attributes != undefined){
             for(let key in attributes){
@@ -58,8 +66,10 @@ export default class HtmlObject{
         });
     }
 
- 
-
+     /*
+        guarda funciones de otros objetos que se subscriben a los eventos 
+        
+    */
     subscribeListeners(tag,evnt,[callback,args],ob,){
         if(this.eventSubscribers[tag]== undefined){
             
@@ -72,6 +82,10 @@ export default class HtmlObject{
         }
     }
 
+
+    /*
+        retorna un un DOM object de la propiedad object
+    */
     getHtmlObject(key){
         return this.objects[key];    
     }
