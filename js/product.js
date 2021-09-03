@@ -1,4 +1,3 @@
-
 import  Cart from './cart.js';
 import HtmlObject from './htmlobject.js';
 
@@ -17,6 +16,7 @@ export default class Product extends HtmlObject{
 
     
     toHTMLObject(){
+        
         this.HTML2Object("product",{
             tag:"div",
             attributes:{
@@ -66,7 +66,7 @@ export default class Product extends HtmlObject{
             content:{
                 text:"add 2 cart"
             },
-            children:[this.getHtmlObject("add2cartBtn"),this.getHtmlObject("detailsProduct")],
+            
             events:{
                 click:(e)=>{
                     

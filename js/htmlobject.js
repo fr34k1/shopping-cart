@@ -14,7 +14,7 @@ export default class HtmlObject{
         este metodo parsea un objeto literal pasado como parametro a un objeto del DOM de javascript
         y lo guarda en la propiedad objetos
     */
-    HTML2Object(key,{tag,attributes,content,events,parentNode},){
+    HTML2Object(key,{tag,attributes,content,events,parentNode},list){
         
         const ob = document.createElement(tag);  
         
@@ -40,6 +40,7 @@ export default class HtmlObject{
 
                     if(this.eventSubscribers[key][ev]!=undefined){
                         this.eventSubscribers[key][ev].forEach(([fn,args])=>{
+                            //console.log(args)
                             fn(args,e)
                         })
                     }
@@ -48,14 +49,25 @@ export default class HtmlObject{
         }
 
         
-        this.objects[key]=ob;
-        
         if(parentNode){
             if(this.objects[parentNode]){
+                
                 this.objects[parentNode].appendChild(ob)
             }
         }
         //console.log(this.objects)
+        
+        if(this.objects[key]!=undefined && list){
+            if(Array.isArray( this.objects[key])){
+                this.objects[key].push(ob);
+            }else{
+                this.objects[key]=[this.objects[key]];
+                this.objects[key].push(ob);
+            }
+        }else{
+            this.objects[key]=ob;
+        }
+        
         
     }
 
@@ -82,13 +94,20 @@ export default class HtmlObject{
         }
     }
 
-
+    getHtmlObjects(){
+        return this.objects;
+    }
     /*
         retorna un un DOM object de la propiedad object
     */
     getHtmlObject(key){
         return this.objects[key];    
+
     }
-}
 
+    areOnjectsEmpty(){
+        
+        return Object.keys(this.objects).length== 0 ? true : false; 
+    }
 
+ }
