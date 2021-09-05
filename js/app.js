@@ -3,18 +3,19 @@ import products from './database.js';
 import Product from './product.js';
 import Cart from './cart.js';
 import Pagination from './pagination.js';
+import Filter from './filter.js';
 
 
 export default class Application{
     constructor(){
         this.products=products;
-    
+        this.filter = new Filter();
         this.container =document.getElementById("product-view");
         this.cart = new Cart();
         this.pagination=new Pagination(this.products.length,3);
     }
 
-    renderProducts(filter={search:{},pagination:{actual:1}}){
+    render(filter={search:{},pagination:{actual:1}}){
         
         if(!this.products.length){
             
@@ -30,7 +31,7 @@ export default class Application{
             this.pagination.subscribeListeners(
             "linkPage",
             "click",
-            [this.renderProducts,filter={pagination:{actual:this.pagination.actualPage}}],
+            [this.render,filter={pagination:{actual:this.pagination.actualPage}}],
             this,  )
            
         }
@@ -48,7 +49,7 @@ export default class Application{
         this.products.length :
         this.pagination.itemsPerPage+this.pagination.offset>this.products.length ?  this.products.length: this.pagination.itemsPerPage+this.pagination.offset;  
 
-//console.log(this.pagination.offset)
+
         for (let off = this.pagination.offset; off < total ; off++) {
             const p = this.products[off]
            
