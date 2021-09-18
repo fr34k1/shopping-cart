@@ -1,6 +1,6 @@
-Simple shopping cart in html css and javascript 
+#Simple shopping cart in html css and javascript vanilla 
 
-freatures:
+##freatures:
 
 -it shows a list o products
 
